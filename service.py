@@ -1,36 +1,53 @@
-Inventario = {}
+def agregar_producto(inventario, nombre, precio, cantidad):
+    inventario.append({"nombre": nombre, "precio": precio, "cantidad": cantidad})
+    print(f"Producto '{nombre}' agregado exitosamente.")
 
-def agregar_producto(nombre, precio, cantidad):
-    Inventario[nombre] = { "precio": precio, "cantidad":cantidad }
-    print("producto agregado") 
-
-def mostrar_productos():
-    if Inventario:
-        for  nombre, producto in Inventario.items():
-            print(f"{nombre}: {producto['precio']} x {producto['cantidad']}")
-
-def eliminar_producto(nombre):
-    if nombre in Inventario:
-        del Inventario[nombre]
-        print('eliminado con exito')
+def mostrar_inventario(inventario):
+    if not inventario:
+        print("El inventario está vacío.")
     else:
-        print('no hay producto en el inventario')
+        for producto in inventario:
+            print(f"Nombre: {producto['nombre']}, Precio: {producto['precio']}, Cantidad: {producto['cantidad']}")
 
-def actualizar_producto(nombre, precio=None, cantidad=None):
-    if nombre in Inventario:
-        if precio: 
-            Inventario [nombre]['precio'] = precio
-        if cantidad:
-            Inventario [nombre]['cantidad'] = cantidad
-        print('producto actualizado con exito')
-    else:
-        print('producto no encontrado')
+def buscar_producto(inventario, nombre):
+    for producto in inventario:
+        if producto["nombre"].lower() == nombre.lower():
+            return producto
+        return None
 
-def calcular_estaditica():
-    if Inventario:
-        total_productos = sum(producto['cantidad'] for producto in Inventario.values())
-        valor_total = sum(producto['precio'] * producto['cantidad'] for producto in Inventario.values())
-        print(f"total prodcutos: {total_productos}")
-        print(f"valor total del inventario: ${valor_total:.2f}")
-    else:
-        print("no hay producto en el inventario") 
+def eliminar_producto(inventario, nombre):
+    producto = buscar_producto(inventario, nombre)
+    if not producto:
+        print(f"producto '{nombre}' no encontrado.")
+        return
+    else: 
+        inventario.remove(producto)
+        print(f"producto {nombre} eliminado exitositamente.")
+
+def actualizar_producto(inventario, nombre, precio=None, cantidad=None):
+    producto = buscar_producto(inventario, nombre)
+    if not producto:
+        print(f"producto {nombre} no encontardo.")
+        return
+    if precio:
+        producto["precio"] = precio
+        print(f"precio del producto {nombre} actualizado exitosamente.")
+    if cantidad:
+        producto["cantidad"] = cantidad
+        print(f"cantidad del producto {nombre} actaulizado exitosamente.")
+
+def calcular_estadistica(inventario):
+    if not inventario:
+        print("el inventario esta vacio.")
+        return
+    unidades_totales = sum(producto["cantodad"] for producto in inventario)
+    valor_total = sum(producto["precio"] * producto["cantiidad"] for producto in inventario)
+    producto_mas_caro = max(inventario, key=lambda x: x["precio"])
+    producto_mayor_stock = max(inventario, key=lambda x: x["cantidad"])
+    return {
+        "unidades_totales": unidades_totales,
+        "valor_totales": valor_total,
+        "producto_mas_caro": producto_mas_caro,
+        "producto_mayor_stock": producto_mayor_stock      
+    }
+        

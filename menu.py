@@ -1,5 +1,4 @@
-import os 
-from service import agregar_producto, mostrar_productos, eliminar_producto, actualizar_producto, calcular_estaditica
+
 
 
 
