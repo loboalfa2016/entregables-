@@ -1,62 +1,54 @@
-import os 
-from service import agregar_producto, mostrar_inventario, buscar_producto, eliminar_producto, actualizar_producto, calcular_estadistica 
+import servicios
+import archivos
 
-v
+inventario = []
 
+while True:
+    print("\nMenú principal")
+    print("1. Agregar producto")
+    print("2. Mostrar inventario")
+    print("3. Buscar producto")
+    print("4. Actualizar producto")
+    print("5. Eliminar producto")
+    print("6. Calcular estadísticas")
+    print("7. Guardar CSV")
+    print("8. Cargar CSV")
+    print("9. Salir")
+    opcion = input("Ingrese una opción: ")
 
-def main():
-    while True:
-        print("\nMenu principal ")
-        print("1. Agregar producto")
-        print("2. Mostrar productos")
-        print("3. Eliminar producto")
-        print("4. Actualizar producto")
-        print("5. Calcular estadísticas")
-        print("6. Salir")
-        opt = int(input("escribe una opcion"))
-        match opt:
-            case 1:
-                while True:
-                    nombre = str(input("escribe el nombre del producto"))
-                    if nombre.replace(" ", " ").isalpha():
-                        break
-                    else:
-                        print("ingrese un nombre al producto (solo letras )")
-                while True:
-                    try:
-                        precio = float(input("ingresa el precio del producto"))
-                        if precio > 0:
-                            break
-                        else:
-                            print("error")
-                    except ValueError:
-                        print("error")
-                while True:
-                    cantidad = int(input("ingrese la cantidad a comprar"))
-                    try:
-                        if cantidad > 0:
-                            break
-                        else: 
-                            print("error")
-                    except ValueError:
-                        print('error')
-                agregar_producto(nombre, precio, cantidad)
-            case 2:
-                mostrar_productos()  
-            case 3:
-                nombre = input("ingrese el nombre del producto que desea eliminar ")
-                eliminar_producto(nombre)
-            case 4:
-                nombre = input("escribe el producto a actualizar")
-                precio = input("ingrese el precio a actualizar (sino dejalo en blanco si va a mantenerse igual)")
-                cantidad = input("ingrese la cantidad (si no cambia dejalo asi dejalo en blanco)")
-                precio = float(precio) if precio else None
-                cantidad = float(cantidad) if precio else None
-                actualizar_producto(nombre, precio, cantidad)
-            case 5:
-                calcular_estaditica()
-            case 6:
-                print("hasta luego")
-                break
-            case _:
-                print ("error 10101010101")
+    match opcion:
+        case "1":
+            nombre = input("Ingrese el nombre del producto: ")
+            precio = float(input("Ingrese el precio del producto: "))
+            cantidad = int(input("Ingrese la cantidad del producto: "))
+            servicios.agregar_producto(inventario, nombre, precio, cantidad)
+        case "2":
+            servicios.mostrar_inventario(inventario)
+        case "3":
+            nombre = input("Ingrese el nombre del producto: ")
+            producto = servicios.buscar_producto(inventario, nombre)
+            if producto:
+                print(producto)
+            else:
+                print("Producto no encontrado")
+        case "4":
+            nombre = input("Ingrese el nombre del producto: ")
+            nuevo_precio = float(input("Ingrese el nuevo precio del producto: "))
+            nueva_cantidad = int(input("Ingrese la nueva cantidad del producto: "))
+            servicios.actualizar_producto(inventario, nombre, nuevo_precio, nueva_cantidad)
+        case "5":
+            nombre = input("Ingrese el nombre del producto: ")
+            servicios.eliminar_producto(inventario, nombre)
+        case "6":
+            estadisticas = servicios.calcular_estadisticas(inventario)
+            print(estadisticas)
+        case "7":
+            ruta = input("Ingrese la ruta del archivo CSV: ")
+            archivos.guardar_csv(inventario, ruta)
+        case "8":
+            ruta = input("Ingrese la ruta del archivo CSV: ")
+            inventario = archivos.cargar_csv(ruta)
+        case "9":
+            break
+        case _:
+            print("Opción inválida")

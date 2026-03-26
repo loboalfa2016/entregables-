@@ -13,7 +13,7 @@ def buscar_producto(inventario, nombre):
     for producto in inventario:
         if producto["nombre"].lower() == nombre.lower():
             return producto
-        return None
+    return None
 
 def eliminar_producto(inventario, nombre):
     producto = buscar_producto(inventario, nombre)
@@ -39,9 +39,9 @@ def actualizar_producto(inventario, nombre, precio=None, cantidad=None):
 def calcular_estadistica(inventario):
     if not inventario:
         print("el inventario esta vacio.")
-        return
-    unidades_totales = sum(producto["cantodad"] for producto in inventario)
-    valor_total = sum(producto["precio"] * producto["cantiidad"] for producto in inventario)
+        return None
+    unidades_totales = sum(producto["cantidad"] for producto in inventario)
+    valor_total = sum(producto["precio"] * producto["cantidad"] for producto in inventario)
     producto_mas_caro = max(inventario, key=lambda x: x["precio"])
     producto_mayor_stock = max(inventario, key=lambda x: x["cantidad"])
     return {
