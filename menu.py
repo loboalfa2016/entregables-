@@ -1,5 +1,7 @@
+import os 
+from service import agregar_producto, mostrar_inventario, buscar_producto, eliminar_producto, actualizar_producto, calcular_estadistica 
 
-
+v
 
 
 def main():

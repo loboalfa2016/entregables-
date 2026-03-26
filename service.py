@@ -48,6 +48,6 @@ def calcular_estadistica(inventario):
         "unidades_totales": unidades_totales,
         "valor_totales": valor_total,
         "producto_mas_caro": producto_mas_caro,
-        "producto_mayor_stock": producto_mayor_stock      
+        "producto_mayor_stock": producto_mayor_stock
     }
         
